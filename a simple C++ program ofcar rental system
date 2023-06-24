@@ -1,4 +1,4 @@
-//  simple  car rental system
+//  simple C++ program of car rental system
 #include <iostream>
 #include <string>
 #include <vector>
