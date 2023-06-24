@@ -1,0 +1,123 @@
+//  simple  car rental system
+#include <iostream>
+#include <string>
+#include <vector>
+
+// Car class to hold car information
+class Car {
+public:
+    std::string make;
+    std::string model;
+    int year;
+    bool available;
+
+    Car(const std::string& make, const std::string& model, int year)
+        : make(make), model(model), year(year), available(true) {}
+};
+
+// Car Rental System class
+class CarRentalSystem {
+private:
+    std::vector<Car> cars; // Vector to store cars
+
+public:
+    void addCar(const std::string& make, const std::string& model, int year) {
+        Car newCar(make, model, year);
+        cars.push_back(newCar);
+    }
+
+    void rentCar(int carIndex) {
+        if (carIndex >= 0 && carIndex < cars.size()) {
+            if (cars[carIndex].available) {
+                cars[carIndex].available = false;
+                std::cout << "Car rented successfully!" << std::endl;
+            } else {
+                std::cout << "Car is already rented." << std::endl;
+            }
+        } else {
+            std::cout << "Invalid car index." << std::endl;
+        }
+    }
+
+    void returnCar(int carIndex) {
+        if (carIndex >= 0 && carIndex < cars.size()) {
+            if (!cars[carIndex].available) {
+                cars[carIndex].available = true;
+                std::cout << "Car returned successfully!" << std::endl;
+            } else {
+                std::cout << "Car is already available." << std::endl;
+            }
+        } else {
+            std::cout << "Invalid car index." << std::endl;
+        }
+    }
+
+    void displayAvailableCars() {
+        std::cout << "Available Cars:" << std::endl;
+        for (int i = 0; i < cars.size(); i++) {
+            if (cars[i].available) {
+                std::cout << "[" << i << "] " << cars[i].make << " " << cars[i].model << " (" << cars[i].year << ")" << std::endl;
+            }
+        }
+        std::cout << std::endl;
+    }
+};
+
+int main() {
+    CarRentalSystem carRentalSystem;
+    int choice;
+
+    do {
+        std::cout << "Car Rental System" << std::endl;
+        std::cout << "1. Add Car" << std::endl;
+        std::cout << "2. Rent Car" << std::endl;
+        std::cout << "3. Return Car" << std::endl;
+        std::cout << "4. Display Available Cars" << std::endl;
+        std::cout << "5. Exit" << std::endl;
+        std::cout << "Enter your choice: ";
+        std::cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                std::string make, model;
+                int year;
+                std::cout << "Enter make: ";
+                std::cin >> make;
+                std::cout << "Enter model: ";
+                std::cin >> model;
+                std::cout << "Enter year: ";
+                std::cin >> year;
+                carRentalSystem.addCar(make, model, year);
+                std::cout << "Car added successfully!" << std::endl;
+                break;
+            }
+            case 2: {
+                int carIndex;
+                std::cout << "Enter car index: ";
+                std::cin >> carIndex;
+                carRentalSystem.rentCar(carIndex);
+                break;
+            }
+            case 3: {
+                int carIndex;
+                std::cout << "Enter car index: ";
+                std::cin >> carIndex;
+                carRentalSystem.returnCar(carIndex);
+                break;
+            }
+            case 4:
+                carRentalSystem.displayAvailableCars();
+                break;
+            case 5:
+                std::cout << "Exiting..." << std::endl;
+                break;
+            default:
+                std::cout << "Invalid choice!" << std::endl;
+                break;
+        }
+
+        std::cout << std::endl;
+    } while (choice != 5);
+
+    return 0;
+}
